@@ -31,7 +31,6 @@ class TeamController(SatControllerInterface):
     def team_run(self, system_state: sat_msgs.SystemState, satellite_state: sat_msgs.SataliteState, dead_sat_state: sat_msgs.SataliteState) -> sat_msgs.ControlMessage:
         """ Takes in a system state and a satellite state and returns a control message """
 
-        print(dead_sat_state)
 
         # Get timedelta from elapsed time
         elapsed_time = system_state.elapsedTime.ToTimedelta()
@@ -45,14 +44,15 @@ class TeamController(SatControllerInterface):
 
         # Create a thrust command message
         thrust_cmd = sat_msgs.ControlMessage()
-
+        desiredx = dead_sat_state.pose.x
+        desiredy =dead_sat_state.pose.y
         # Set thrust command values
-        if(elapsed_time.total_seconds() < 1.5):
+        if(elapsed_time.total_seconds() < 0.01):
             thrust_cmd.thrust.f_x = 0.5
         else:
-            thrust_cmd.thrust.f_x = -2.0 * (satellite_state.pose.x - 2) - 3.0 * satellite_state.twist.v_x
-            thrust_cmd.thrust.f_y = -2.0 * (satellite_state.pose.y - 4 - 0.3) - 3.0 * satellite_state.twist.v_y
-            thrust_cmd.thrust.tau = -2.0 * (satellite_state.pose.theta + 2 - 3.1415) - 3.0 * satellite_state.twist.omega
+            thrust_cmd.thrust.f_x = -200.0 * (satellite_state.pose.x - 200) - 300.0 * satellite_state.twist.v_x
+            thrust_cmd.thrust.f_y = -2000.0 * (satellite_state.pose.y - 4 - 0.3) - 300.0 * satellite_state.twist.v_y
+            thrust_cmd.thrust.tau = -1000.0 * (satellite_state.pose.theta -(dead_sat_state.pose.theta) ) - 3.0 * satellite_state.twist.omega
 
         # Return thrust command
         return thrust_cmd

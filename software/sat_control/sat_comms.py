@@ -214,7 +214,7 @@ class SatComms:
             self.local_sat_vel.v_x = odom_frame[3]
             self.local_sat_vel.v_y = odom_frame[4]
             self.local_sat_vel.omega = odom_frame[5]
-
+            
             self.ser.flushInput()
         except ValueError as e:
             print(e)

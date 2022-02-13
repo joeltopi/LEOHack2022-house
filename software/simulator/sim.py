@@ -94,9 +94,9 @@ class Sim():
         self.vis["/Background"].set_property("top_color", [0, 0, 0])
 
         # Add satellites
-        self.vis["dead_sat"].set_object(g.ObjMeshGeometry.from_file("software/simulator/3d_assets/Base.obj"), g.MeshPhongMaterial(color = 0xDD6442, transparent = False, opacity=1))
+        self.vis["dead_sat"].set_object(g.ObjMeshGeometry.from_file("software/simulator/3d_assets/Base.obj"), g.MeshPhongMaterial(color = 0xDD626E, transparent = False, opacity=1))
         self.logger.debug("Added dead sat")
-        self.vis["team_sat"].set_object(g.ObjMeshGeometry.from_file("software/simulator/3d_assets/Base.obj"), g.MeshPhongMaterial(color = 0x73BE63, transparent = False, opacity=1))
+        self.vis["team_sat"].set_object(g.ObjMeshGeometry.from_file("software/simulator/3d_assets/Base.obj"), g.MeshPhongMaterial(color = 0x426EDD, transparent = False, opacity=1))
         self.logger.debug("Added team sat")
 
         if(self.draw_targets):
@@ -202,7 +202,6 @@ class Sim():
         y_tolerance = 0.05
 
         theta_tolerance = 0.1
-
         # Global offsets
         x_target = dead_x + y_offset * cos(dead_theta - math.pi / 2)
         y_target = dead_y + y_offset * sin(dead_theta - math.pi / 2)
@@ -210,7 +209,6 @@ class Sim():
         x_error = abs(self.sat_state.pose.x - x_target)
         y_error = abs(self.sat_state.pose.y - y_target)
         theta_error = abs(self.sat_state.pose.theta % math.pi - dead_theta % math.pi)
-
         # Check position tolerance
         if(x_error < x_tolerance and y_error < y_tolerance):
             self.logger.info("Passing position tolerance!")
@@ -265,16 +263,21 @@ class Sim():
 
             self.dead_sat_state.pose.x = 0.2
             self.dead_sat_state.pose.y = -2.0
-            self.dead_sat_state.pose.theta = -0.3 + t * self.dead_sat_state.twist.omega
+            self.dead_sat_state.pose.theta = -0.8 + t * self.dead_sat_state.twist.omega
         elif(self.challenge_level == 4):
             # LEVEL 3 Translating and rotating sat
             self.dead_sat_state.twist.v_x = 0.02
             self.dead_sat_state.twist.v_y = -0.01
-            self.dead_sat_state.twist.omega = 0.05
+            self.dead_sat_state.twist.omega = 0.08
 
-            self.dead_sat_state.pose.x = 0.5 + t * self.dead_sat_state.twist.v_x
-            self.dead_sat_state.pose.y = -0.2 + t * self.dead_sat_state.twist.v_y
-            self.dead_sat_state.pose.theta = -0.4 + t * self.dead_sat_state.twist.omega
+            self.dead_sat_state.pose.x = 0 + t * self.dead_sat_state.twist.v_x
+            self.dead_sat_state.pose.y = -1 + t * self.dead_sat_state.twist.v_y
+            self.dead_sat_state.pose.theta = 0 + t * self.dead_sat_state.twist.omega
+
+            #self.dead_sat_state.pose.x = 0.5 + t * self.dead_sat_state.twist.v_x
+            #self.dead_sat_state.pose.y = -0.2 + t * self.dead_sat_state.twist.v_y
+            #self.dead_sat_state.pose.theta = -0.4 + t * self.dead_sat_state.twist.omega
+
 
     def start(self):
         """ Starts the simulation """
