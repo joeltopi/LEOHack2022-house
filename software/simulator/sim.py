@@ -266,12 +266,12 @@ class Sim():
             self.dead_sat_state.pose.theta = -0.8 + t * self.dead_sat_state.twist.omega
         elif(self.challenge_level == 4):
             # LEVEL 3 Translating and rotating sat
-            self.dead_sat_state.twist.v_x = 0.04
-            self.dead_sat_state.twist.v_y = -0.03
+            self.dead_sat_state.twist.v_x = 0.1
+            self.dead_sat_state.twist.v_y = -0.05
             self.dead_sat_state.twist.omega = 0.08
 
-            self.dead_sat_state.pose.x = 8 + t * self.dead_sat_state.twist.v_x
-            self.dead_sat_state.pose.y = -6 + t * self.dead_sat_state.twist.v_y
+            self.dead_sat_state.pose.x = 3 + t * self.dead_sat_state.twist.v_x
+            self.dead_sat_state.pose.y = 1 + t * self.dead_sat_state.twist.v_y
             self.dead_sat_state.pose.theta = 0 + t * self.dead_sat_state.twist.omega
 
             #self.dead_sat_state.pose.x = 0.5 + t * self.dead_sat_state.twist.v_x
